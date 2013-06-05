@@ -1,0 +1,17 @@
+{
+  "name": "CubeCompass",
+  "description": "CSS 3D cube compass",
+  "orientation": ["portrait"],
+  "launch_path": "/index.html",
+  "default_locale": "en",
+  "developer": {
+    "name": "pancake",
+    "url": "http://cube.ffos.lolcathost.org/"
+  },
+  "icons": {
+    "256": "/cube256.png",
+    "120": "/cube120.png",
+    "90": "/cube90.png",
+    "60": "/cube60.png"
+  }
+}

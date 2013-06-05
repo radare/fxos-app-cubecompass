@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>Cube Compass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=false" />
+<style>
+body {
+  background-color:black;
+overflow-x: hidden;
+overflow-y: hidden;
+}
+.container {
+  width: 200;
+  height: 300;
+  position: relative;
+  perspective: 1000px;
+}
+
+#cube {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+#cube figure {
+  width: 146px;
+  height: 146px;
+  display: block;
+  position: absolute;
+  border: 2px solid white;
+background: -moz-linear-gradient(top, #6db3f2 0%, #54a3ee 45%, #3690f0 75%, #1e69de 100%); /* FF3.6+ */
+  font-size: 7em;
+font-weight:bold;
+  transform: scale (2.5);
+  perspective: 1200;
+font-family: Verdana;
+text-align:center;
+opacity:0.8;
+text-top:800px;
+top:0px;
+left:0px;
+}
+
+/*
+#cube .front  { transform: rotateY(   0deg ); }
+#cube .back   { transform: rotateX( 180deg ); }
+#cube .right  { transform: rotateY(  90deg ); }
+#cube .left   { transform: rotateY( -90deg ); }
+#cube .top    { transform: rotateX(  90deg ); }
+#cube .bottom { transform: rotateX( -90deg ); }
+*/
+
+/*
+#cube .front  { transform: rotateY(   0deg ) translateZ( 100px ); }
+#cube .back   { transform: rotateX( 180deg ) translateZ( 100px ); }
+#cube .right  { transform: rotateY(  90deg ) translateZ( 100px ); }
+#cube .left   { transform: rotateY( -90deg ) translateZ( 100px ); }
+#cube .top    { transform: rotateX(  90deg ) translateZ( 100px ); }
+#cube .bottom { transform: rotateX( -90deg ) translateZ( 100px ); }
+*/
+
+#cube .front  { transform: rotateY(   0deg ) translateZ( 73px ); }
+#cube .back   { transform: rotateX( 180deg ) translateZ( 73px ); }
+#cube .right  { transform: rotateY(  90deg ) translateZ( 73px ) rotateZ(-90deg); }
+#cube .left   { transform: rotateY( -90deg ) translateZ( 73px ) rotateZ(90deg); }
+#cube .top    { transform: rotateX(  90deg ) translateZ( 73px ); }
+#cube .bottom { transform: rotateX( -90deg ) translateZ( 73px ); }
+
+#cube { transform: translateZ (0px) rotateX(0deg); };
+
+</style>
+<script>
+
+var bit = 0;
+
+function toggle() {
+	bit = !bit;
+	if (!bit) document.getElementById('text').innerHTML = '';
+}
+
+function init() {
+	//document.getElementById ("body").style.setProperty ("background-color", "yellow");
+	//document.getElementById ("text").style.setProperty ("background-color", "yellow");
+	document.getElementById ("text").style.setProperty ("color", "#a0a0a0");
+	document.getElementById ("text").style.setProperty ("height", "10%");
+}
+
+window.addEventListener("deviceorientation", function (e) {
+  if (e) setTimeout (function(){
+	var x=document.getElementById("container")
+	var y=document.getElementById("cube").cloneNode(true)
+	var cc;
+	x.removeChild(document.getElementById("cube"))
+	x.appendChild(y)
+	function deg(x) {
+		x=x<<0;
+		if (x<0) x = 360+x;
+		return x + "deg";
+	}
+	var b = e.beta>>0;
+	var g = e.gamma>>0;
+	var a = e.alpha>>0;
+	if (bit) document.getElementById('text').innerHTML = [a,b,g].join(' ');
+	//document.getElementById ("body").style.setProperty ("background-color", "#e0e0e0");
+	document.getElementById ("cube").style.setProperty ('transform-origin', "50% 50%");
+	document.getElementById ("cube").style.transform =
+		"rotateX("+deg(-b)+") "+
+		"rotateY("+deg(g)+") "+
+		"rotateZ("+deg(-a)+")";
+  }, 0);
+}, false);
+</script>
+    <script defer src="install.js"></script>
+</head>
+<body id="body" onload="init()" onclick="toggle()">
+<div id="text"></div>
+<center>
+<section class="container" id="container">
+  <div id="cube">
+    <figure class="front">U</figure>
+    <figure class="back">G</figure>
+    <figure class="right">E</figure>
+    <figure class="left">W</figure>
+    <figure class="top">N</figure>
+    <figure class="bottom">S</figure>
+  </div>
+</section>
+</center>
+</body>
+</html>
